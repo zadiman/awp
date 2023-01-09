@@ -21,3 +21,10 @@ alias awp="awp && . /tmp/aws_profile"
 Now when you execute your alias:
 
 ![image](https://user-images.githubusercontent.com/26366265/169647564-7010f98d-ac70-4440-94b4-94f7b8a73ae7.png)
+
+## Additional use
+Choose what region to populate `AWS_REGION` with.
+
+```
+$ awp -region eu-north-1
+```

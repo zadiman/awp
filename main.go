@@ -1,6 +1,7 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"io/ioutil"
 	"os"
@@ -55,6 +56,9 @@ func main() {
 		os.Exit(1)
 	}
 
+	region := flag.String("region", "", "Specify region")
+	flag.Parse()
+
 	cfg, err := ini.Load(homedir + "/.aws/config")
 	if err != nil {
 		fmt.Printf("Fail to read file: %v", err)
@@ -70,7 +74,13 @@ func main() {
 
 	for k, v := range profiles[idx] {
 		p := strings.Split(k, " ")
-		awsProfile := fmt.Sprint("export AWS_PROFILE=" + p[1] + "\n" + "export AWS_REGION=" + v.Region + "\n")
+		var awsProfile string
+		if *region != "" {
+			awsProfile = fmt.Sprint("export AWS_PROFILE=" + p[1] + "\n" + "export AWS_REGION=" + *region + "\n")
+		} else {
+			fmt.Println("I am here")
+			awsProfile = fmt.Sprint("export AWS_PROFILE=" + p[1] + "\n" + "export AWS_REGION=" + v.Region + "\n")
+		}
 		data := []byte(awsProfile)
 		if err := ioutil.WriteFile("/tmp/aws_profile", data, 0664); err != nil {
 			panic(err)
