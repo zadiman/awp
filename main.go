@@ -78,7 +78,6 @@ func main() {
 		if *region != "" {
 			awsProfile = fmt.Sprint("export AWS_PROFILE=" + p[1] + "\n" + "export AWS_REGION=" + *region + "\n")
 		} else {
-			fmt.Println("I am here")
 			awsProfile = fmt.Sprint("export AWS_PROFILE=" + p[1] + "\n" + "export AWS_REGION=" + v.Region + "\n")
 		}
 		data := []byte(awsProfile)
